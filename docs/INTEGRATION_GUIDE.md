@@ -36,7 +36,7 @@ App-level `build.gradle.kts`:
 ```kotlin
 dependencies {
     implementation("com.applovin:applovin-sdk:13.3.1")
-    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.0")
+    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.1")
 }
 ```
 
@@ -133,7 +133,7 @@ ADSmaxCN: Interstitial ad shown: ...
 
 | Adapter | AppLovin SDK | Google Mobile Ads SDK |
 |---|---|---|
-| 1.0.0 | 13.0.0+ | 24.7.0+ |
+| 1.0.1 | 13.0.0+ | 24.7.0+ |
 
 ## 9. Support
 

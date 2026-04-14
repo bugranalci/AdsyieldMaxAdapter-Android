@@ -26,7 +26,7 @@ App seviyesi `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.0")
+    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.1")
 }
 ```
 
@@ -68,7 +68,7 @@ App-level `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.0")
+    implementation("com.github.bugranalci:AdsyieldMaxAdapter-Android:1.0.1")
 }
 ```
 

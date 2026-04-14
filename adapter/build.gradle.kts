@@ -3,7 +3,7 @@ plugins {
     id("maven-publish")
 }
 
-val adapterVersion = "1.0.0"
+val adapterVersion = "1.0.1"
 
 android {
     namespace = "com.adsyield.mediation.max"

@@ -66,6 +66,8 @@ public class ADSmaxCN extends MediationAdapterBase
     private RewardedAd     rewardedAd;
     private AdView         adView;
 
+    private RewardedAdListener rewardedAdapterListener;
+
     public ADSmaxCN(final AppLovinSdk sdk) {
         super(sdk);
     }
@@ -107,6 +109,7 @@ public class ADSmaxCN extends MediationAdapterBase
             rewardedAd.setFullScreenContentCallback(null);
             rewardedAd = null;
         }
+        rewardedAdapterListener = null;
         if (adView != null) {
             adView.destroy();
             adView = null;
@@ -231,8 +234,8 @@ public class ADSmaxCN extends MediationAdapterBase
                     public void onAdLoaded(@NonNull final RewardedAd ad) {
                         log("Rewarded ad loaded: " + placementId);
                         rewardedAd = ad;
-                        rewardedAd.setFullScreenContentCallback(
-                                new RewardedAdListener(placementId, listener));
+                        rewardedAdapterListener = new RewardedAdListener(placementId, listener);
+                        rewardedAd.setFullScreenContentCallback(rewardedAdapterListener);
                         listener.onRewardedAdLoaded();
                     }
 
@@ -256,8 +259,9 @@ public class ADSmaxCN extends MediationAdapterBase
             configureReward(parameters);
             rewardedAd.show(activity, rewardItem -> {
                 log("User earned reward: " + placementId);
-                final MaxReward reward = getReward();
-                listener.onUserRewarded(reward);
+                if (rewardedAdapterListener != null) {
+                    rewardedAdapterListener.grantedReward = true;
+                }
             });
         } else {
             log("Rewarded ad not ready: " + placementId);
@@ -268,6 +272,7 @@ public class ADSmaxCN extends MediationAdapterBase
     private class RewardedAdListener extends FullScreenContentCallback {
         private final String placementId;
         private final MaxRewardedAdapterListener listener;
+        boolean grantedReward;
 
         RewardedAdListener(final String placementId, final MaxRewardedAdapterListener listener) {
             this.placementId = placementId;
@@ -293,6 +298,11 @@ public class ADSmaxCN extends MediationAdapterBase
 
         @Override
         public void onAdDismissedFullScreenContent() {
+            if (grantedReward || shouldAlwaysRewardUser()) {
+                final MaxReward reward = getReward();
+                log("Rewarding user with: " + reward);
+                listener.onUserRewarded(reward);
+            }
             log("Rewarded ad hidden: " + placementId);
             listener.onRewardedAdHidden();
         }
